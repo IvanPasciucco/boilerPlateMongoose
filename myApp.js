@@ -15,11 +15,15 @@ connection.on('error', console.error.bind(console, '❌ Error de conexión:'));
 connection.once('open', function() {
   console.log("✅ ¡CONECTADO EXITOSAMENTE A MONGODB ATLAS!");
 });
-//
-// mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-let Person;
+const personSchema = new mongoose.Schema({
+  name: { type: String, required: true }, // Campo obligatorio
+  age: Number,
+  favoriteFoods: [String] // Un array de textos
+});
 
+
+let Person = mongoose.model('Person', personSchema);
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
 };
