@@ -24,10 +24,29 @@ const personSchema = new mongoose.Schema({
 
 
 let Person = mongoose.model('Person', personSchema);
-const createAndSavePerson = (done) => {
-  done(null /*, data*/);
-};
 
+const createAndSavePerson = (done) => {
+  // 1. Creamos la instancia (el documento) usando el Modelo 'Person'
+  // Puedes cambiar los datos "Ivan", 30, etc. por lo que quieras.
+  let ivan = new Person({
+    name: "Ivan",
+    age: 30,
+    favoriteFoods: ["Asado", "Pizza", "Empanadas"]
+  });
+
+  // 2. Guardamos en la base de datos
+  // IMPORTANTE: Usamos .then() y .catch() porque tu versión de Mongoose es moderna.
+  ivan.save()
+    .then(data => {
+      // Si todo sale bien, llamamos a done() con null (sin error) y la data guardada
+      done(null, data);
+    })
+    .catch(err => {
+      // Si falla, llamamos a done() con el error
+      console.error(err);
+      done(err);
+    });
+};
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
 };
