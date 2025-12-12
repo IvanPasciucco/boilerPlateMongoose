@@ -61,10 +61,8 @@ const createManyPeople = (arrayOfPeople, done) => {
     });
 };
 const findPeopleByName = (personName, done) => {
-  // Buscamos a todas las personas donde el campo 'name' coincida con la variable 'personName'
   Person.find({ name: personName })
     .then(peopleFound => {
-      // Devolvemos la lista encontrada (Array)
       done(null, peopleFound);
     })
     .catch(err => {
@@ -74,7 +72,6 @@ const findPeopleByName = (personName, done) => {
 };
 
 const findOneByFood = (food, done) => {
-  // Use Model.findOne() to find a single document matching the criteria
   Person.findOne({ favoriteFoods: food }, (err, data) => {
     if (err) return done(err);
     return done(null, data);
@@ -141,7 +138,14 @@ const removeManyPeople = (done) => {
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
-  done(null /*, data*/);
+  Person.find({ favoriteFoods: foodToSearch }) // 1. Buscar
+    .sort({ name: 1 })                         // 2. Ordenar por nombre (ascendente)
+    .limit(2)                                  // 3. Limitar a 2 resultados
+    .select('-age')                            // 4. Ocultar la edad (el signo menos excluye)
+    .exec((err, data) => {                     // 5. Ejecutar la consulta
+      if (err) return done(err);
+      return done(null, data);
+    });
 };
 
 /** **Well Done !!**
