@@ -131,7 +131,11 @@ const removeById = (personId, done) => {
 const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
 
-  done(null /*, data*/);
+  // Person.remove elimina todos los documentos que coincidan con el criterio
+  Person.remove({ name: nameToRemove }, (err, response) => {
+    if (err) return done(err);
+    return done(null, response);
+  });
 };
 
 const queryChain = (done) => {
