@@ -61,7 +61,16 @@ const createManyPeople = (arrayOfPeople, done) => {
     });
 };
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  // Buscamos a todas las personas donde el campo 'name' coincida con la variable 'personName'
+  Person.find({ name: personName })
+    .then(peopleFound => {
+      // Devolvemos la lista encontrada (Array)
+      done(null, peopleFound);
+    })
+    .catch(err => {
+      console.log(err);
+      done(err);
+    });
 };
 
 const findOneByFood = (food, done) => {
