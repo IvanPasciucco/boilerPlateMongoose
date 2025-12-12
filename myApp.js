@@ -1,5 +1,22 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
 
+// --- AGREGA ESTO TEMPORALMENTE ---
+console.log("---------------------------------------------------");
+console.log("MI URI ES TIPO:", typeof process.env.MONGO_URI);
+console.log("VALOR EXACTO:", process.env.MONGO_URI); // ¿Qué imprime esto?
+console.log("---------------------------------------------------");
+// ---------------------------------
+mongoose.connect(process.env.MONGO_URI);
+const connection = mongoose.connection;
+
+connection.on('error', console.error.bind(console, '❌ Error de conexión:'));
+
+connection.once('open', function() {
+  console.log("✅ ¡CONECTADO EXITOSAMENTE A MONGODB ATLAS!");
+});
+//
+// mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 let Person;
 
