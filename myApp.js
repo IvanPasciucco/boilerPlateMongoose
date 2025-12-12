@@ -121,7 +121,11 @@ const findAndUpdate = (personName, done) => {
   );
 };
 const removeById = (personId, done) => {
-  done(null /*, data*/);
+  // findByIdAndRemove busca por _id y elimina el documento
+  Person.findByIdAndRemove(personId, (err, removedDoc) => {
+    if (err) return done(err);
+    return done(null, removedDoc);
+  });
 };
 
 const removeManyPeople = (done) => {
